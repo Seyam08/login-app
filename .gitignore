@@ -11,7 +11,7 @@ client/node_modules
 client/dist
 client/dist-ssr
 client/*.local
-client/.eslintrc.json
+client/.eslintrc
 
 # Logs
 server/logs
@@ -26,7 +26,7 @@ server/node_modules
 server/dist
 server/dist-ssr
 server/*.local
-server/.eslintrc.json
+server/.eslintrc
 
 # Editor directories and files
 client/.vscode/*
