@@ -1,13 +1,31 @@
+import { useFormik } from "formik";
 import React from "react";
+import { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import avatar from "../assets/profile.png";
-
 // import styles
 import styles from "../styles/Username.module.css";
+// import helpers
+import { usernameValidate } from "./helper/validate";
 
 export default function Username() {
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+    },
+    validate: usernameValidate,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async (values, { resetForm }) => {
+      console.log(values);
+      resetForm({ values: "" });
+    },
+  });
+
   return (
     <div className="container mx-auto">
+      <Toaster position="top-right" reverseOrder={false}></Toaster>
+
       <div className="flex justify-center items-center h-screen">
         <div className={styles.glass}>
           <div className="title flex flex-col items-center">
@@ -16,13 +34,15 @@ export default function Username() {
               Explore more by connecting with us
             </span>
           </div>
-          <form action="" className="py-1">
+
+          <form onSubmit={formik.handleSubmit} className="py-1">
             <div className="profile flex justify-center py-4">
               <img src={avatar} alt="avatar" className={styles.profile_img} />
             </div>
 
             <div className="textbox flex flex-col items-center gap-6">
               <input
+                {...formik.getFieldProps("username")}
                 type="text"
                 placeholder="Username"
                 className={styles.textbox}
