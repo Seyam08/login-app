@@ -1,6 +1,5 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
 // import styles
 import styles from "../styles/Username.module.css";
 // import helpers
@@ -33,9 +32,9 @@ export default function Recover() {
             <div className="text-center py-4">
               <span>
                 Didn't get any code?{" "}
-                <Link className="text-red-500" to="/recovery">
+                <button className="text-red-500" to="/recovery">
                   Resend OTP
-                </Link>
+                </button>
               </span>
             </div>
           </form>
