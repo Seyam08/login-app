@@ -10,7 +10,7 @@ export default function Reset() {
   const formik = useFormik({
     initialValues: {
       password: "",
-      confirm_password: ""
+      confirm_password: "",
     },
     validate: confirmPasswordValidate,
     validateOnBlur: false,
@@ -39,7 +39,7 @@ export default function Reset() {
               <input
                 {...formik.getFieldProps("password")}
                 type="text"
-                placeholder="Password"
+                placeholder="New Password"
                 className={styles.textbox}
               />
               <input
