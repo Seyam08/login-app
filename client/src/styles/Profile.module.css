@@ -1,0 +1,15 @@
+.glass {
+  @apply w-[40%];
+}
+
+.profile_img {
+  @apply w-[100px] cursor-pointer;
+}
+
+.textbox {
+  @apply w-3/4 px-2 py-2;
+}
+.addressbox {
+  @apply border-0 px-3 py-2 rounded-md w-full shadow-sm text-base;
+  @apply focus:outline-none;
+}
