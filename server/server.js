@@ -12,21 +12,17 @@ const app = express();
 const port = 8000;
 
 // database connection
-
 async function connect() {
     try {
         const mongodb = await MongoMemoryServer.create();
         const getUri = mongodb.getUri();
-        await mongoose.connect(getUri, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        mongoose.set('strictQuery', true);
+        await mongoose.connect(getUri);
         console.log('Database connection successful');
     } catch (err) {
-        console.error(err);
+        console.log(err);
     }
 }
-
 connect();
 // middleware
 app.use(morgan('tiny'));
