@@ -1,8 +1,30 @@
 /* eslint-disable import/extensions */
 /* eslint-disable consistent-return */
-
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import UserModel from '../model/User.model.js';
+/** Middleware to verify user existence */
+export async function verifyUser(req, res, next) {
+    try {
+        // Determine if the request method is GET or not
+        const isGetMethod = req.method === 'GET';
+
+        // Extract the username from either the request body or query parameters
+        const username = isGetMethod ? req.query.username : req.body.username;
+
+        // Check if the user exists
+        const userExists = await UserModel.findOne({ username });
+
+        if (!userExists) {
+            return res.status(404).send({ error: 'User not found!' });
+        }
+
+        // Continue to the next middleware
+        next();
+    } catch (error) {
+        return res.status(500).send({ error: 'Authentication Error' });
+    }
+}
 /** POST: http://localhost:8000/api/register
  * @param : {
   "username" : "example123",
@@ -58,7 +80,44 @@ export async function register(req, res) {
 }
 */
 export async function login(req, res) {
-    res.json('login route');
+    const { username, password } = req.body;
+
+    try {
+        // Find the user by username
+        const user = await UserModel.findOne({ username });
+
+        if (!user) {
+            return res.status(404).send({ error: 'Username not Found' });
+        }
+
+        // Compare the provided password with the user's hashed password
+        const passwordCheck = await bcrypt.compare(password, user.password);
+
+        if (!passwordCheck) {
+            return res.status(400).send({ error: 'Password does not Match' });
+        }
+
+        // Create a JWT token with user information
+        const token = jwt.sign(
+            {
+                // eslint-disable-next-line no-underscore-dangle
+                userId: user._id,
+                username: user.username,
+            },
+            process.env.JWT_SECRET,
+            // eslint-disable-next-line comma-dangle
+            { expiresIn: '24h' }
+        );
+
+        // Send a successful login response
+        return res.status(200).send({
+            msg: 'Login Successful...!',
+            username: user.username,
+            token,
+        });
+    } catch (error) {
+        return res.status(500).send({ error });
+    }
 }
 /** GET: http://localhost:8000/api/user/example123 */
 export async function getUser(req, res) {

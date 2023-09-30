@@ -1,5 +1,7 @@
 /* eslint-disable import/extensions */
 import cors from 'cors';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import dotenv from 'dotenv';
 import express from 'express';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
@@ -7,7 +9,7 @@ import morgan from 'morgan';
 import router from './router/route.js';
 
 const app = express();
-
+dotenv.config();
 // server port
 const port = 8000;
 
