@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import { Router } from 'express';
 // import all controller
-import * as controller from '../controller/appController.js';
+import * as controller from '../controller/appEndpoints.js';
 
 const router = Router();
 

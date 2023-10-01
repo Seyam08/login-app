@@ -120,9 +120,29 @@ export async function login(req, res) {
     }
 }
 /** GET: http://localhost:8000/api/user/example123 */
+
 export async function getUser(req, res) {
-    res.json('getUser route');
+    const { username } = req.params;
+    try {
+        if (!username) {
+            return res.status(400).json({ error: 'Invalid Username' });
+        }
+
+        const user = await UserModel.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({ error: "Couldn't Find the User" });
+        }
+
+        // Remove password from the user object
+        const { password, ...rest } = user.toJSON();
+
+        return res.status(200).json(rest);
+    } catch (error) {
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
+
 /** PUT: http://localhost:8000/api/updateuser
  * @param: {
   "id" : "<userid>"
