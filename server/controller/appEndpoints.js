@@ -154,7 +154,25 @@ body: {
 }
 */
 export async function updateUser(req, res) {
-    res.json('updateUser route');
+    try {
+        const { id } = req.query;
+        const updateData = req.body;
+
+        if (!id) {
+            return res.status(401).json({ error: 'User Not Found' });
+        }
+
+        const result = await UserModel.updateOne({ _id: id }, updateData);
+
+        if (result.nModified === 0) {
+            return res.status(404).json({ error: 'No user record updated' });
+        }
+
+        return res.status(200).json({ message: 'User record updated successfully' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 /** GET: http://localhost:8000/api/generateOTP */
 export async function generateOTP(req, res) {
