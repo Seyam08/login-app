@@ -155,14 +155,22 @@ body: {
 */
 export async function updateUser(req, res) {
     try {
-        const { id } = req.query;
+        // const { id } = req.query;
+        const { userId } = req.user;
         const updateData = req.body;
+        const { username } = req.body;
 
-        if (!id) {
+        if (!userId) {
             return res.status(401).json({ error: 'User Not Found' });
         }
+        // checking existing username
+        const user = await UserModel.findOne({ username });
 
-        const result = await UserModel.updateOne({ _id: id }, updateData);
+        if (user) {
+            return res.status(404).send({ error: 'Username already exist' });
+        }
+
+        const result = await UserModel.updateOne({ _id: userId }, updateData);
 
         if (result.nModified === 0) {
             return res.status(404).json({ error: 'No user record updated' });
