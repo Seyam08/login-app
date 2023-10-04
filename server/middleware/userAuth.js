@@ -13,3 +13,11 @@ export default async function userAuth(req, res, next) {
         res.status(404).json({ error: 'User authentication failed!!' });
     }
 }
+
+export function localVariables(req, res, next) {
+    req.app.locals = {
+        OTP: null,
+        resetSession: false,
+    };
+    next();
+}

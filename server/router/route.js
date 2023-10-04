@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import { Router } from 'express';
 
-import userAuth from '../middleware/userAuth.js';
+import userAuth, { localVariables } from '../middleware/userAuth.js';
 // import all controller
 import * as controller from '../controller/appEndpoints.js';
 
@@ -15,7 +15,7 @@ router.route('/login').post(controller.verifyUser, controller.login); // login i
 
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser); // user with username
-router.route('/generateOTP').get(controller.generateOTP); // generate random OTP
+router.route('/generateOTP').get(controller.verifyUser, localVariables, controller.generateOTP); // generate random OTP
 router.route('/verifyOTP').get(controller.verifyOTP); // verify generated OTP
 router.route('/createResetSession').get(controller.createResetSession); // reset all the variables
 /** PUT Methods */
