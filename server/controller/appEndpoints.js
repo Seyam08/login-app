@@ -70,7 +70,6 @@ export async function register(req, res) {
             res.status(201).json({ msg: 'User registered successfully' });
         }
     } catch (error) {
-        console.error('Error registering user:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 }

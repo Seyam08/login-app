@@ -1,12 +1,13 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import avatar from "../assets/profile.png";
 // import styles
 import styles from "../styles/Username.module.css";
 // import helpers
 import convertToBase64 from "./helper/converter";
+import { registerUser } from "./helper/helpers";
 import { registrationValidate } from "./helper/validate";
 
 export default function Register() {
@@ -23,7 +24,15 @@ export default function Register() {
     validateOnChange: false,
     onSubmit: async (values, { resetForm }) => {
       values = Object.assign(values, { profileImg: file || "" });
-      console.log(values);
+      let registerPromise = registerUser(values);
+      // console.log(registerPromise);
+      toast.promise(registerPromise, {
+        success: <b>Registration successful</b>,
+        error: (err) => {
+          return err;
+        },
+        loading: "creating",
+      });
       resetForm({ values: "" });
     },
   });
@@ -91,9 +100,9 @@ export default function Register() {
 
             <div className="text-center py-4">
               <span>
-                Not a member?{" "}
-                <Link className="text-red-500" to="/register">
-                  Register now
+                already registered?{" "}
+                <Link className="text-red-500" to="/">
+                  Login now
                 </Link>
               </span>
             </div>
