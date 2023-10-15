@@ -1,16 +1,26 @@
+import axios from "axios";
 import toast from "react-hot-toast";
 
+// base url
+axios.defaults.baseURL = "http://localhost:8000/";
 // username validation
 export async function usernameValidate(values) {
-  const error = {};
-
-  if (!values.username) {
-    error.username = toast.error("Username Required...!");
-  } else if (values.username.includes(" ")) {
-    error.username = toast.error("Invalid Username...!");
+  try {
+    const errors = {};
+    if (!values.username) {
+      errors.username = toast.error("Username Required...!");
+      return { errors };
+    } else if (values.username.includes(" ")) {
+      errors.username = toast.error("Username cannot contain spaces!");
+      return { errors };
+    }
+    await axios.post("/api/authenticate", {
+      username: values.username,
+    });
+  } catch (error) {
+    toast.error(error.response.data.error);
+    return { error };
   }
-
-  return error;
 }
 
 // password validation

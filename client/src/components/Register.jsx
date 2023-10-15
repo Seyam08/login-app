@@ -94,7 +94,7 @@ export default function Register() {
                 className={styles.textbox}
               />
               <button className={styles.btn} type="submit">
-                Let's go
+                Register
               </button>
             </div>
 
