@@ -116,7 +116,7 @@ export async function login(req, res) {
             token,
         });
     } catch (error) {
-        return res.status(500).send({ error });
+        return res.status(500).send({ error: 'Internal server error! ' });
     }
 }
 /** GET: http://localhost:8000/api/user/example123 */

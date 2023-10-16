@@ -9,6 +9,8 @@ import Recovery from "./components/Recovery";
 import Register from "./components/Register";
 import Reset from "./components/Reset";
 import Username from "./components/Username";
+// authentication import
+import { ProtectRoute } from "./components/helper/authentication";
 
 // route declaretion
 const router = createBrowserRouter([
@@ -18,7 +20,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/password",
-    element: <Password />,
+    element: <ProtectRoute chilldren={<Password />} />,
   },
   {
     path: "/profile",
@@ -37,7 +39,7 @@ const router = createBrowserRouter([
     element: <Recovery />,
   },
   {
-    path: '*',
+    path: "*",
     element: <PageNotFound />,
   },
 ]);

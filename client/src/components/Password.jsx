@@ -1,13 +1,17 @@
 import { useFormik } from "formik";
 import React from "react";
-import { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 // import styles
 import styles from "../styles/Username.module.css";
 // import helpers
+import { setUsername } from "./helper/credentials";
+import { loginUser } from "./helper/helpers";
 import { passwordValidate } from "./helper/validate";
 
 export default function Password() {
+  const navigate = useNavigate();
+  const username = setUsername;
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -16,8 +20,25 @@ export default function Password() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values, { resetForm }) => {
-      console.log(values);
+      let loginUserPromise = loginUser({
+        username,
+        password: values.password,
+      });
+      // console.log(loginUserPromise);
+      toast.promise(loginUserPromise, {
+        success: <b>Login successful.</b>,
+        error: (err) => {
+          return err;
+        },
+        loading: "Checking...",
+      });
       resetForm({ values: "" });
+
+      loginUserPromise.then((res) => {
+        let { token } = res.data;
+        localStorage.setItem("token", token);
+        navigate("/profile");
+      });
     },
   });
 

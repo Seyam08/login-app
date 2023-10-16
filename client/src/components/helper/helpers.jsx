@@ -13,3 +13,14 @@ export async function registerUser(credential) {
     return Promise.reject(error.response.data.error);
   }
 }
+// login function
+export async function loginUser({ username, password }) {
+  try {
+    if (username) {
+      const { data } = await axios.post("api//login", { username, password });
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject(error.response.data.error);
+  }
+}

@@ -19,7 +19,7 @@ export default function Username() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values, { resetForm }) => {
-      setUsername(values.username);
+      setUsername.value = values.username;
       // console.log(loguser);
       resetForm({ values: "" });
       navigate("/password");
