@@ -6,9 +6,9 @@ import avatar from "../assets/profile.png";
 // import styles
 import styles from "../styles/Username.module.css";
 // import helpers
-import convertToBase64 from "./helper/converter";
-import { registerUser } from "./helper/helpers";
-import { registrationValidate } from "./helper/validate";
+import convertToBase64 from "../helper/converter";
+import { registerUser } from "../helper/helpers";
+import { registrationValidate } from "../helper/validate";
 
 export default function Register() {
   const [file, setFile] = useState();
@@ -23,7 +23,7 @@ export default function Register() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values, { resetForm }) => {
-      values = Object.assign(values, { profileImg: file || "" });
+      values = Object.assign(values, { profile: file || "" });
       let registerPromise = registerUser(values);
       // console.log(registerPromise);
       toast.promise(registerPromise, {

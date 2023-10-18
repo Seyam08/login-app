@@ -1,32 +1,37 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import avatar from "../assets/profile.png";
 // import styles
 import extend from "../styles/Profile.module.css";
 import styles from "../styles/Username.module.css";
 // import helpers
-import convertToBase64 from "./helper/converter";
-import { profileValidation } from "./helper/validate";
+import convertToBase64 from "../helper/converter";
+import { profileValidation } from "../helper/validate";
+// hooks import
+import useFetch from "../hooks/useFetch";
 
 export default function Profile() {
+  const navigate = useNavigate();
   const [file, setFile] = useState();
-
+  const [{ loading, apiRes, serverError }] = useFetch();
+  console.log(apiRes?.email);
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      mobile: "",
-      address: "",
+      firstName: apiRes?.firstName || "",
+      lastName: apiRes?.lastName || "",
+      email: apiRes?.email || "",
+      mobile: apiRes?.mobile || "",
+      address: apiRes?.address || "",
     },
+    enableReinitialize: true,
     validate: profileValidation,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: async (values, { resetForm }) => {
-      values = Object.assign(values, { profileImg: file || "" });
+    onSubmit: async (values) => {
+      values = Object.assign(values, { profile: file || "" });
       console.log(values);
-      resetForm({ values: "" });
     },
   });
 
@@ -35,6 +40,18 @@ export default function Profile() {
     const base64 = await convertToBase64(e.target.files[0]);
     setFile(base64);
   };
+  // logout handler function
+  function userLogout() {
+    localStorage.removeItem("token");
+    navigate("/");
+  }
+
+  if (loading) {
+    return <h1 className="text-2xl font-bold">Loading</h1>;
+  }
+  if (serverError) {
+    return <h1 className="text-xl text-red-500">{serverError.message}</h1>;
+  }
 
   return (
     <div className="container mx-auto">
@@ -53,7 +70,7 @@ export default function Profile() {
             <div className="profile flex justify-center py-2">
               <label htmlFor="profile-img">
                 <img
-                  src={file || avatar}
+                  src={apiRes?.profile || file || avatar}
                   className={`${styles.profile_img} ${extend.profile_img}`}
                   alt="avatar"
                 />
@@ -113,7 +130,7 @@ export default function Profile() {
             <div className="text-center py-4">
               <span className="text-gray-500">
                 come back later?{" "}
-                <button className="text-red-500" to="/">
+                <button onClick={userLogout} className="text-red-500">
                   Logout
                 </button>
               </span>

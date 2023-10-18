@@ -1,6 +1,5 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 // route components import
 import PageNotFound from "./components/PageNotFound";
 import Password from "./components/Password";
@@ -10,7 +9,7 @@ import Register from "./components/Register";
 import Reset from "./components/Reset";
 import Username from "./components/Username";
 // authentication import
-import { ProtectRoute } from "./components/helper/authentication";
+import { ProtectRoute } from "./helper/authentication";
 
 // route declaretion
 const router = createBrowserRouter([

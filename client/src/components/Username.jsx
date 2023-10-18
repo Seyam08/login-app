@@ -6,8 +6,8 @@ import avatar from "../assets/profile.png";
 // import styles
 import styles from "../styles/Username.module.css";
 // import helpers
-import { setUsername } from "./helper/credentials";
-import { usernameValidate } from "./helper/validate";
+import { setUsername } from "../helper/credentials";
+import { usernameValidate } from "../helper/validate";
 
 export default function Username() {
   const navigate = useNavigate();
@@ -18,10 +18,9 @@ export default function Username() {
     validate: usernameValidate,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: async (values, { resetForm }) => {
-      setUsername.value = values.username;
+    onSubmit: async (values) => {
+      setUsername.value = { username: values.username };
       // console.log(loguser);
-      resetForm({ values: "" });
       navigate("/password");
     },
   });

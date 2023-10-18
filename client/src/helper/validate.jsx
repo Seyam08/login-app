@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 // base url
-axios.defaults.baseURL = "http://localhost:8000/";
+axios.defaults.baseURL = import.meta.env.VITE_REACT_APP_SERVER_URL;
 // username validation
 export async function usernameValidate(values) {
   try {

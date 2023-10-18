@@ -4,7 +4,7 @@ import { Toaster } from "react-hot-toast";
 // import styles
 import styles from "../styles/Username.module.css";
 // import helpers
-import { confirmPasswordValidate } from "./helper/validate";
+import { confirmPasswordValidate } from "../helper/validate";
 
 export default function Reset() {
   const formik = useFormik({
