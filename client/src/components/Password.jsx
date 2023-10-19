@@ -14,7 +14,7 @@ import useFetch from "../hooks/useFetch";
 export default function Password() {
   const navigate = useNavigate();
   const { username } = setUsername.v;
-  console.log(username);
+  // console.log(username);
   const [{ loading, apiRes, serverError }] = useFetch(`/user/${username}`);
 
   const formik = useFormik({

@@ -18,7 +18,7 @@ export async function registerUser(credential) {
 export async function loginUser({ username, password }) {
   try {
     if (username) {
-      const { data } = await axios.post("api//login", { username, password });
+      const { data } = await axios.post("api/login", { username, password });
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -33,4 +33,16 @@ export async function getUsername() {
   }
   let decodedToken = jwt_decode(token);
   return decodedToken;
+}
+// update user profile
+export async function userUpdate(updatedData) {
+  try {
+    const token = localStorage.getItem("token");
+    const data = await axios.put("api/updateuser", updatedData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return Promise.resolve({ data });
+  } catch (error) {
+    return Promise.reject(error);
+  }
 }

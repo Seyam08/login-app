@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import avatar from "../assets/profile.png";
 // import styles
@@ -10,6 +10,7 @@ import styles from "../styles/Username.module.css";
 import convertToBase64 from "../helper/converter";
 import { profileValidation } from "../helper/validate";
 // hooks import
+import { userUpdate } from "../helper/helpers";
 import useFetch from "../hooks/useFetch";
 
 export default function Profile() {
@@ -30,8 +31,18 @@ export default function Profile() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      values = Object.assign(values, { profile: file || "" });
-      console.log(values);
+      values = Object.assign(values, {
+        profile: file || apiRes?.profile || "",
+      });
+      // console.log(values);
+      let updateUserPromise = userUpdate(values);
+      toast.promise(updateUserPromise, {
+        success: <b>User Updated</b>,
+        error: (err) => {
+          return err;
+        },
+        loading: "Updating...",
+      });
     },
   });
 
