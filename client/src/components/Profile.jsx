@@ -17,7 +17,8 @@ export default function Profile() {
   const navigate = useNavigate();
   const [file, setFile] = useState();
   const [{ loading, apiRes, serverError }] = useFetch();
-  console.log(apiRes?.email);
+  // console.log(apiRes);
+  // console.log("component");
   const formik = useFormik({
     initialValues: {
       firstName: apiRes?.firstName || "",

@@ -9,3 +9,11 @@ export function ProtectRoute({ chilldren }) {
   }
   return chilldren;
 }
+
+export function AuthorizeUser({ chilldren }) {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return <Navigate to={"/"} replace={true}></Navigate>;
+  }
+  return chilldren;
+}

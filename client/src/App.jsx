@@ -9,7 +9,7 @@ import Register from "./components/Register";
 import Reset from "./components/Reset";
 import Username from "./components/Username";
 // authentication import
-import { ProtectRoute } from "./helper/authentication";
+import { AuthorizeUser, ProtectRoute } from "./helper/authentication";
 
 // route declaretion
 const router = createBrowserRouter([
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <Porfile />,
+    element: <AuthorizeUser chilldren={<Porfile />} />,
   },
   {
     path: "/register",

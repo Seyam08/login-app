@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import avatar from "../assets/profile.png";
 // import styles
 import styles from "../styles/Username.module.css";
@@ -12,7 +12,7 @@ import { registrationValidate } from "../helper/validate";
 
 export default function Register() {
   const [file, setFile] = useState();
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -34,6 +34,7 @@ export default function Register() {
         loading: "creating",
       });
       resetForm({ values: "" });
+      navigate("/");
     },
   });
 
