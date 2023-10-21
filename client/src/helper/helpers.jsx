@@ -46,3 +46,26 @@ export async function userUpdate(updatedData) {
     return Promise.reject(error);
   }
 }
+// generate otp
+export async function generateOTP(username) {
+  try {
+    const {
+      data: { code },
+    } = await axios.get("/api/generateOTP", { params: { username } });
+
+    return Promise.resolve(code);
+  } catch (error) {
+    return Promise.reject({ error });
+  }
+}
+/** verify OTP */
+export async function verifyOTP({ username, code }) {
+  try {
+    const { data } = await axios.get("/api/verifyOTP", {
+      params: { username, code },
+    });
+    return Promise.resolve(data);
+  } catch (error) {
+    return Promise.reject(error.response.data.error);
+  }
+}

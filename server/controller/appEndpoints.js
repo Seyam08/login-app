@@ -197,6 +197,7 @@ export async function verifyOTP(req, res) {
     if (parseInt(req.app.locals.OTP, 10) === parseInt(code, 10)) {
         req.app.locals.OTP = null; // reset the OTP value
         req.app.locals.resetSession = true; // start session for reset password
+        console.log(req.app.locals);
         return res.status(201).send({ msg: 'Verify Successsfully!' });
     }
     return res.status(400).send({ error: 'Invalid OTP' });

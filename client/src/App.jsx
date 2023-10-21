@@ -9,7 +9,11 @@ import Register from "./components/Register";
 import Reset from "./components/Reset";
 import Username from "./components/Username";
 // authentication import
-import { AuthorizeUser, ProtectRoute } from "./helper/authentication";
+import {
+  AuthorizeUser,
+  ProtectRoute,
+  RecoveryProtect,
+} from "./helper/authentication";
 
 // route declaretion
 const router = createBrowserRouter([
@@ -35,7 +39,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/recovery",
-    element: <Recovery />,
+    element: <RecoveryProtect chilldren={<Recovery />} />,
   },
   {
     path: "*",

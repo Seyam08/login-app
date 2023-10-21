@@ -34,7 +34,9 @@ export default function Register() {
         loading: "creating",
       });
       resetForm({ values: "" });
-      navigate("/");
+      registerPromise.then(function () {
+        navigate("/");
+      });
     },
   });
 
