@@ -58,7 +58,7 @@ export async function generateOTP(username) {
     return Promise.reject({ error });
   }
 }
-/** verify OTP */
+// verify OTP
 export async function verifyOTP({ username, code }) {
   try {
     const { data } = await axios.get("/api/verifyOTP", {
@@ -67,5 +67,17 @@ export async function verifyOTP({ username, code }) {
     return Promise.resolve(data);
   } catch (error) {
     return Promise.reject(error.response.data.error);
+  }
+}
+// reset password
+export async function resetPassword({ username, password }) {
+  try {
+    const { data, status } = await axios.put("/api/resetPassword", {
+      username,
+      password,
+    });
+    return Promise.resolve({ data, status });
+  } catch (error) {
+    return Promise.reject({ error });
   }
 }

@@ -26,3 +26,11 @@ export function RecoveryProtect({ chilldren }) {
   }
   return chilldren;
 }
+// register protect
+export function RegisterProtect({ chilldren }) {
+  const token = localStorage.getItem("token");
+  if (token) {
+    return <Navigate to={"/profile"} replace={true}></Navigate>;
+  }
+  return chilldren;
+}

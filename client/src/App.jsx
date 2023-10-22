@@ -13,6 +13,7 @@ import {
   AuthorizeUser,
   ProtectRoute,
   RecoveryProtect,
+  RegisterProtect,
 } from "./helper/authentication";
 
 // route declaretion
@@ -31,11 +32,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Register />,
+    element: <RegisterProtect chilldren={<Register />} />,
   },
   {
     path: "/reset",
-    element: <Reset />,
+    element: <RecoveryProtect chilldren={<Reset />} />,
   },
   {
     path: "/recovery",
